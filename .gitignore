@@ -1,0 +1,5 @@
+bin
+files/send
+.classpath
+.project
+*.jar

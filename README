@@ -1,0 +1,6 @@
+Performance test application for the Idemix smart card implementation.
+
+Adjust the MAX_ATTR and MAX_RUNS parameters to configure which tests to execute.
+Then build and run using
+
+    ant; java -jar idemix_test.app.jar

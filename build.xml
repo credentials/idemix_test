@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project name="IRMA personalisation application" default="all">
+  
+  <property file="build.properties" />
+
+  <path id="classpath">
+    <fileset dir="${lib.dir}">
+        <include name="*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="clean">
+    <delete dir="${bin.dir}" />
+  </target>
+
+  <target name="distclean" depends="clean">
+    <delete file="${jar.application.dir}/${jar.application.archive}" />
+  </target>
+
+  <target name="compile">
+    <mkdir dir="${bin.dir}" />
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false">
+       <classpath refid="classpath" />
+    </javac>
+  </target>
+
+  <target name="application" depends="compile">
+    <jar destfile="${jar.application.dir}/${jar.application.archive}">
+      <manifest>
+        <attribute name="Main-Class" value="${jar.application.run}"/>
+        <attribute name="Class-Path" value="."/>
+      </manifest>
+                
+      <fileset dir="${bin.dir}" />
+      <zipfileset excludes="META-INF/*.SF" src="lib/scuba.lib.jar" />
+      <zipfileset excludes="META-INF/*.SF" src="lib/idemix_library.lib.jar" />
+      <zipfileset excludes="META-INF/*.SF" src="lib/idemix_terminal.lib.jar" />
+    </jar>
+  </target>
+  
+  <target name="all" depends="application" />
+
+  <target name="run" depends="application">
+    <java jar="${jar.application.dir}/${jar.application.archive}" fork="true" />
+  </target>
+</project>
